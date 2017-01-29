@@ -46,6 +46,13 @@
         height: 10px;
         margin-left: 3px;
       }
+      textarea {
+        margin-bottom: -4px;
+        width: 300px;
+      }
+      input[type=submit] {
+        margin-bottom: 10px;
+      }
       #error {
         color: red;
       }
@@ -74,12 +81,10 @@
   </head>
 
   <body>
-    <h1 class="header">SA.FE Loot Buy Contract Calculator</h1>
     <textarea id="loot"
       placeholder="Evepraisal URL or copy and paste from inventory"></textarea>
     <input type="submit" onclick="getResults();">
     <div id="error"></div>
-    <hr>
     <div id="contract">
       <p>Create Contract</p>
       <h2>Select Options (3/4)</h2>
