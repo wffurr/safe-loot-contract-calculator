@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <title>SA.FE Loot Buy Contract Calculator</title>
+    <style>
+      body {
+        background-color: #020202;
+        color: #9A9A9A;
+        font-family: sans-serif;
+      }
+      #contract {
+        display: inline-block;
+        width: 400px;  /* TODO add alternate formatting for <400px */
+        padding: 0 10px;
+        border: 1px solid #322C1C;
+        font-size: 0.85em;
+      }
+      #contract > :first-child {
+        margin-top: 8px;
+      }
+      #contract h2 {
+        color: #C0C0C0;
+        font-size: 1.3em;
+      }
+      #contract input[type=text] {
+        float: right;
+        width: 125px;
+        padding: 1px 3px;
+        border-top: 1px solid #31281A;
+        border-left: 1px solid #31281A;
+        border-bottom: 1px solid #4D4230;
+        border-right: 1px solid #4D4230;
+        background-color: #2A2113;
+        color: #C0BEBA;
+      }
+      #contract input[type=button] {
+        float: right;
+        width: 80px;
+        margin-left: 3px;
+        border: 1px solid #654E1D;
+        background-color: #3F3013;
+        color: #BBAB8A;
+      }
+      #contract .placeholder {
+        float: right;
+        width: 80px;
+        height: 10px;
+        margin-left: 3px;
+      }
+      #error {
+        color: red;
+      }
+    </style>
+    <script type="text/javascript">
+    function getResults() {
+        const $ = document.querySelector.bind(document);
+        $('#error').style.display = 'none';
+        const loot = $('#loot').value;
+        if (!loot) return;
+        google.script.run.withSuccessHandler(function(result) {
+          if (result.error) {
+            $('#error').value = result.error;
+            $('#error').style.display = 'block';
+            return;
+          }
+          const formatter = Intl.NumberFormat('en-UK', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          });
+          $('#payout').value = formatter.format(result.payout);
+          $('#evepraisal_url').value = result.evepraisal_url;
+        }).calculatePayout(loot);
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1 class="header">SA.FE Loot Buy Contract Calculator</h1>
+    <textarea id="loot"
+      placeholder="Evepraisal URL or copy and paste from inventory"></textarea>
+    <input type="submit" onclick="getResults();">
+    <div id="error"></div>
+    <hr>
+    <div id="contract">
+      <p>Create Contract</p>
+      <h2>Select Options (3/4)</h2>
+      <p>
+        I will pay
+        <span class="placeholder"></span>
+        <input type="text" readonly=1 value="0.0">
+      </p>
+      <p>
+        I will receive
+        <input type="button" value="Base Price">
+        <input type="text" readonly=1 id="payout" onclick="this.select();">
+      </p>
+      <p>
+        Expiration
+        <span class="placeholder"></span>
+        <input type="text" readonly=1 value="2 Weeks">
+      </p>
+      <p>
+        Description (optional)
+        <span class="placeholder"></span>
+        <input type="text" readonly=1 id="evepraisal_url" onclick="this.select();">
+      </p>
+    </div>
+  </body>
+</html>
+
