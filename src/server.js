@@ -77,7 +77,9 @@ function calculatePayout(loot) {
     if (item.name in BLUE_LOOT) {
       payout += BLUE_LOOT[item.name] * item.quantity * (1 - TAX_RATE);
     } else {
-      payout += item.prices.buy.max * item.quantity * (1 - TAX_RATE);
+      if (item.prices) {
+        payout += item.prices.buy.max * item.quantity * (1 - TAX_RATE);
+      }
     }
   }
 
