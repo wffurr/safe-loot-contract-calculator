@@ -30,24 +30,23 @@ function doGet() {
 function makeEvepraisal(loot) {
   var resp;
   try {
-    resp = UrlFetchApp.fetch('http://evepraisal.com/estimate', {
+    resp = UrlFetchApp.fetch('http://evepraisal.com/appraisal', {
       method: 'post',
+      //contentType: 'multipart/form-data',
+      muteHttpExceptions: true,
       payload: {
-        raw_paste: loot,
-        hide_buttons: false,
-        paste_autosubmit: false,
-        market: '30000142',  // Jita
-        save: true
+        raw_textarea: loot,
+        market: 'jita',
       }
     }).getContentText();
   } catch(error) {
     return false;
   }
-  var matches = resp.match(/document.title = "Evepraisal - Result #([0-9]+)/);
+  var matches = resp.match(/Evepraisal - Appraisal Result ([a-z0-9]+)/);
   if (!matches) {
     return false;
   }
-  return 'http://evepraisal.com/e/' + matches[1];
+  return 'http://evepraisal.com/a/' + matches[1];
 }
 
 /**
@@ -56,7 +55,7 @@ function makeEvepraisal(loot) {
  *  Handles both evepraisal URL or inventory block.
  */
 function calculatePayout(loot) {
-  var evepraisal_url = loot.match('http://evepraisal.com/e/[0-9]+');
+  var evepraisal_url = loot.match('http://evepraisal.com/a/[a-z0-9]+');
   if (!evepraisal_url) {
     evepraisal_url = makeEvepraisal(loot);
     if (!evepraisal_url) {
