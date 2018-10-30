@@ -5,7 +5,8 @@ var BLUE_LOOT = {
   'Ancient Coordinates Database': 1500000,
   'Neural Network Analyzer': 200000,
   'Sleeper Data Library': 500000,
-  'Sleeper Drone AI Nexus': 5000000
+  'Sleeper Drone AI Nexus': 5000000,
+  'Triglavian Survey Databse': 100000
 };
 
 /**
