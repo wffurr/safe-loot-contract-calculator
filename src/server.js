@@ -6,7 +6,7 @@ var BLUE_LOOT = {
   'Neural Network Analyzer': 200000,
   'Sleeper Data Library': 500000,
   'Sleeper Drone AI Nexus': 5000000,
-  'Triglavian Survey Databse': 100000
+  'Triglavian Survey Database': 100000
 };
 
 /**
